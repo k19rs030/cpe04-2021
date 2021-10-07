@@ -215,6 +215,18 @@
           var s=parseInt(rest-m*60);
           $("#remain").html("残り時間："+m+"分"+s+"秒");
           analog(rest);
+          var mstr="分：";
+          for(var i=0;i<m;i++)
+          {
+            mstr+="○";
+          }
+          $("#minuteStr").html(mstr);
+          var sstr="分：";
+          for(var i=0;i<s;i++)
+          {
+            sstr+="○";
+          }
+          $("#secondStr").html(sstr);
         }
         if(rest<=0)
         {
