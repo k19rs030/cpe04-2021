@@ -154,7 +154,10 @@
     var active=false;
     var startTime=0;
     var period=0;
-    var stopDate;
+    var stopTime= 0;
+    var restartTime=0;
+    var isTimeGoes=false;
+    var delayTime=0;
 
     
     // ボタンの初期設定
@@ -163,7 +166,6 @@
         $('#btnB').prop('disabled', false);
         $('#btnC').prop('disabled', false);
         btnCClick(null);
-        
     }
 
     // Alarmの処理
@@ -179,21 +181,30 @@
       var audio= new Audio();
       audio.src="pin.wav";
       audio.play();
+      isTimeGoes=false;
     }
     
     // ButtonAがクリックされた時の処理
     function btnAClick(e){
-        active=true;
-        startTime=new Date();
-        $("#btnA").prop("disabled",true);
-    
+      if(!isTimeGoes)
+      {
+        startTime= new Date();
+      }
+      else
+      {
+        restartTime=new Date();
+        delayTime=restartTime-stopTime;
+      }
+      active=true;
+      $("#btnA").prop("disabled",true);
+      isTimeGoes=true;
     }
 
     // ButtonBがクリックされた時の処理
     function btnBClick(e){
         active=false;
         $("#btnA").prop("disabled",false);
-        stopDate= new Date();
+        stopTime=new Date();
     }
 
     // ButtonCがクリックされた時の処理
@@ -204,7 +215,7 @@
         $("#time").html("経過時間：0");
         $("#remain").html("残り時間："+period);
         $("#btnA").prop("disabled",false);
-        
+        isTimeGoes=false;
     }
     
  
@@ -212,7 +223,7 @@
     function timer(){  
         if(active)
         {
-          var time=parseInt((new Date()-startTime)/1000);
+          var time=parseInt((new Date()-startTime-delayTime)/1000);
           var rest=period-time;
           $("#time").html("経過時間："+time);
           var m=parseInt(rest/60);
