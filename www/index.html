@@ -223,11 +223,14 @@
     }
     function btnDClick(e)
     {
+      active=false;
       $("#minute").val(3);
       $("#second").val(0);
       period=60*parseInt($("#minute").val())+parseInt($("#second").val());
-        $("#time").html("経過時間：0");
-        $("#remain").html("残り時間："+period);
+      $("#time").html("経過時間：0");
+      $("#remain").html("残り時間："+period);
+      $("#btnA").prop("disabled",false);
+      isTimeGoes=false;
     }
     
  
